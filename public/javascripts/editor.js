@@ -10,18 +10,13 @@ $(document).ready(function() {
   canvas.height=windowHeight*4;
   $(canvas).css({position: 'absolute', marginTop: (-2*windowHeight)+'px', marginLeft: (-2*windowWidth)+'px'});
   imageObj.onload = function(){
-    if(imageObj.height>imageObj.width){
-      var multiplier=(imageObj.height)/(windowHeight);
-      canvasXPos=(windowWidth)*.5-imageObj.width/(2*multiplier)+windowWidth*2;
-      canvasYPos=windowHeight*2;
-      canvasWidth=imageObj.width/multiplier;
-      canvasHeight=windowHeight;
-    }
+    var result=centerCanvas(windowWidth,windowHeight,imageObj.width,imageObj.height);
+    canvasXPos=result.canvasXPos; canvasYPos=result.canvasYPos; canvasWidth=result.canvasWidth; canvasHeight=result.canvasHeight;
     context.drawImage(this, canvasXPos, canvasYPos,canvasWidth,canvasHeight);
     topLayerImage=context.getImageData(canvasXPos,canvasYPos,canvasWidth,canvasHeight);
     completeImage=context.getImageData(canvasXPos,canvasYPos,canvasWidth,canvasHeight);
   };   
-  imageObj.src = "images/creative6.jpg";
+  imageObj.src = "images/creative4.jpg";
   
   var tool=0; //0: pan
   $(".layerTool").click(function(e){
@@ -88,6 +83,12 @@ $(document).ready(function() {
   $('.a2').click(function(e){
     e.preventDefault();
   });
+  $('#centerImg').click(function(){
+    var result=centerCanvas(windowWidth, windowHeight, canvasWidth, canvasHeight);
+    canvasXPos=result.canvasXPos; canvasYPos=result.canvasYPos; canvasWidth=result.canvasWidth; canvasHeight=result.canvasHeight;
+    context.clearRect(0,0,canvas.width,canvas.height);
+    context.putImageData(completeImage,canvasXPos,canvasYPos);
+  });
 });
 
 function updateAdjustment(element, imgData){
@@ -119,4 +120,23 @@ function reverseHeader(element,callback){
       }
     });
   });
+}
+
+function centerCanvas(windowWidth, windowHeight, width, height){
+  var canvasXPos, canvasYPos, canvasWidth, canvasHeight, multiplier;
+  if(height>width){
+      multiplier=(height)/(windowHeight);
+      canvasXPos=(windowWidth)*.5-width/(2*multiplier)+windowWidth*2;
+      canvasYPos=windowHeight*2;
+      canvasWidth=width/multiplier;
+      canvasHeight=windowHeight;
+  }
+  if(height<width){
+      multiplier=(width)/(windowWidth*.55);
+      canvasXPos=windowWidth*2.22;
+      canvasYPos=(windowHeight)*.5-height/(2*multiplier)+windowHeight*2;
+      canvasWidth=windowWidth*.55;
+      canvasHeight=height/multiplier;
+  }
+  return {canvasXPos: canvasXPos, canvasYPos: canvasYPos, canvasWidth: canvasWidth, canvasHeight: canvasHeight};
 }

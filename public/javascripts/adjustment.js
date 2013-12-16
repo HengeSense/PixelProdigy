@@ -39,7 +39,10 @@ function adjustFillLight(imgData, amount)
   amount = Math.floor(255 * (amount / 100));
   for (var i=0;i<data.length;i+=4){
     sum=data[i]+data[i+1]+data[i+2];
-    inc=((255*3-sum)/(255))*amount*.5;
+    if (sum>255*1.2)
+      inc=0
+    else
+      inc=((255*3-sum)/(255))*amount*.5;
     data[i]+=inc;
     data[i+1]+=inc;
     data[i+2]+=inc;
