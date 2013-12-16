@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  div(class="top")#header
+    table#nav
+      h1 Pixel Prodigy       
+      td: a(class="a1",href="") Feedback 
+      td: a(class="a1",href="") Contact 
+      td: a(class="a1",href="") Technical Info
+    div(class="right")
+      a(id="login1",class="a1",href="") Log In
+  div#one 
+    div(id="signupBox")
+       h2 Sign Up to gain access to photo Libraries, Multiple Photo Edits, and Additional Presets!
+         form(name='signup',action='/signup',method='post')
+             div(data-role='fieldcontain')
+               fieldset(data-role='controlgroup')
+                label(for='username') User Name: 
+                input(name='username',type='text',value='',placeholder='')
+             div(data-role='fieldcontain')
+               fieldset(data-role='controlgroup')
+                label(for='password') Password: 
+                input(name='password',type='password',value='',placeholder='')
+             div(data-role='fieldcontain')
+               fieldset(data-role='controlgroup')
+                label(for='email') Email: 
+                input(name='email',type='text',value='',placeholder='@')
+             div(data-role='fieldcontain')   
+                input(type='submit',value='login',data-transition='fade', data-theme='c')
+    div(id="simpleEditor",class="editor")
+      h2 Simple Editor
+    div(id="completeEditor",class="editor")
+      h2 Complete Editor
+  div#two
+  

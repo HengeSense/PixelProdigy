@@ -1,0 +1,66 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='/stylesheets/editor.css')
+  script(type='text/javascript', src="/javascripts/caman.js")
+  script(type='text/javascript', src="/javascripts/adjustment.js")
+  script(type='text/javascript', src="/javascripts/editor.js")
+  div#editorMain 
+    div#imageHolder
+      canvas#mainCanvas
+    div#layerHolder
+      div(class="headerBar") Layer Tools
+      img(title="Pan",src="images/icons/arrow_inout.png",class="layerTool select")
+      img(title="Zoom In",src="images/icons/zoom_in.png",class="layerTool")
+      img(title="Zoom Out",src="images/icons/zoom_out.png",class="layerTool")
+      img(title="Move",src="images/icons/cursor.png",class="layerTool")
+      img(title="Select",src="images/icons/shape_handles.png",class="layerTool")
+      div(class="headerBar") Layers
+    div#settingsHolder
+      div(class="headerBar") Layer Settings
+      div(class="scrollHolder")
+        include settings/adjustments.jade
+    div#albumHolder
+  div(class="top")#header
+    table#nav
+      td: h1 Pixel Prodigy       
+      td(class="opt")
+        a(class="a2",href="") File
+        div(class="dropDown")
+          br
+          a(class="a2",href="/editor/file") New
+          a(class="a2",href="/editor/file") Save
+          a(class="a2",href="/editor/file") Render
+          a(class="a2",href="/editor/file") Share
+      td(class="opt")
+        a(class="a2",href="/editor/edit") Edit
+        div(class="dropDown")
+          br
+          a(class="a2",href="/editor/file") Undo
+          a(class="a2",href="/editor/file") Redo
+          a(class="a2",href="/editor/file") Copy Layer
+          a(class="a2",href="/editor/file") Paste Layer
+          a(class="a2",href="/editor/file") Copy Settings
+          a(class="a2",href="/editor/file") Paste Settings
+          a(class="a2",href="/editor/file") Canvas Settings
+      td(class="opt")
+        a(class="a2",href="/editor/view") View
+        div(class="dropDown")
+          br
+          a(class="a2",href="/editor/file") Center Image
+      td(class="opt")
+        a(class="a2",href="/editor/layer") Layer
+        div(class="dropDown")
+          br
+          a(class="a2",href="/editor/file") New Adjustment Layer
+          a(class="a2",href="/editor/file") New Layer from Image
+          a(class="a2",href="/editor/file") New Fill Layer
+          a(class="a2",href="/editor/file") New Text Layer
+          a(class="a2",href="/editor/file") Layer Dimensions
+      td(class="opt")
+        a(class="a2",href="/editor/layer") Help
+        div(class="dropDown")
+          br
+          a(class="a2",href="/editor/file") About
+          a(class="a2",href="/editor/file") Documentation
+          a(class="a2",href="/editor/file") Contact
