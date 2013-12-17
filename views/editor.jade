@@ -16,6 +16,13 @@ block content
       img(title="Move",src="images/icons/cursor.png",class="layerTool")
       img(title="Select",src="images/icons/shape_handles.png",class="layerTool")
       div(class="headerBar") Layers
+      div(class="scrollHolder")
+        - var numLayers = 3
+        - for (var i = numLayers; i > 0; i--)
+          div(class="layer",id="layer"+i)
+            input(type="checkbox",checked="true")
+            img(src="images/icons/shape_handles.png")
+            p='Layer Name'+i
     div#settingsHolder
       div(class="headerBar") Layer Settings
       div(class="scrollHolder")

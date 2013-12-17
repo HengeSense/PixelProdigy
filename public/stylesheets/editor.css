@@ -21,6 +21,16 @@
   height:95%;
   background-color: rgba(255,255,255,.5);
 }
+.layer{
+  margin:2px;
+  border:1px solid black;
+}
+.layer img{
+  display:inline-block;
+}
+.layer p{
+  display:inline-block;
+}
 #layerHolder img{
   padding:5px;
 }

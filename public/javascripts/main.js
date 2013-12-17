@@ -1,9 +1,9 @@
 $( document ).ready(function() {
 
-$('#login1').bind('click',function(e){
-	e.preventDefault();
-	loadOverlay(this);
-});
+  $('#login1').bind('click',function(e){
+	  e.preventDefault();
+	  loadOverlay(this);
+  });
 
 });
 
