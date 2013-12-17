@@ -20,7 +20,10 @@ block content
         - var numLayers = 3
         - for (var i = numLayers; i > 0; i--)
           div(class="layer",id="layer"+i)
-            input(type="checkbox",checked="true")
+            if i == 1
+              input(type="checkbox",checked="true",disabled="true")
+            else
+              input(type="checkbox",checked="true")
             img(src="images/icons/shape_handles.png")
             p='Layer Name'+i
     div#settingsHolder
