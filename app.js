@@ -4,12 +4,13 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
+var editorUtils = require('./routes/editorUtils');
 var http = require('http');
 var path = require('path');
 var pg = require('pg').native;
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
+var Canvas = require('canvas');
 
 var app = express();
 
@@ -70,6 +71,8 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+
+//** LISTEN AND RESPOND
 app.get('/', routes.index);
 app.post('/login',
     passport.authenticate('local', {successRedirect: '/account', failureRedirect: '/'})
@@ -77,6 +80,7 @@ app.post('/login',
 app.get('/account', function(req, res) {
   res.render('account', {user: req.user});
 });
+app.get('/editorutils/initimage', editorUtils.initImage);
 app.get('/completeEditor', function(req, res) {
   res.render('editor');
 });

@@ -5,19 +5,19 @@ $(document).ready(function() {
   var topLayerImage, completeImage, completeImageZoom;
   var canvas = document.getElementById("mainCanvas");
   var context = canvas.getContext("2d");
-  var imageObj = new Image();
   var canvasDim={canvasXPos:0, canvasYPos:0, canvasWidth:0, canvasHeight:0, zoom:1};
   canvas.width=windowWidth*4;
   canvas.height=windowHeight*4;
   $(canvas).css({position: 'absolute', marginTop: (-2*windowHeight)+'px', marginLeft: (-2*windowWidth)+'px'});
-  imageObj.onload = function(){
+  $.ajax({url:"/editorutils/initimage"}).done(function(data){
+    var imageObj=data.baseImage;
+    alert(imageObj.width);
     canvasDim=centerCanvas(windowWidth,windowHeight,imageObj.width,imageObj.height);
-    context.drawImage(this, canvasDim.canvasXPos, canvasDim.canvasYPos,canvasDim.canvasWidth,canvasDim.canvasHeight);
+    context.putImageData(imageObj, canvasDim.canvasXPos, canvasDim.canvasYPos,0,0,canvasDim.canvasWidth,canvasDim.canvasHeight);
     topLayerImage=context.getImageData(canvasDim.canvasXPos,canvasDim.canvasYPos,canvasDim.canvasWidth,canvasDim.canvasHeight);
     completeImage=context.getImageData(canvasDim.canvasXPos,canvasDim.canvasYPos,canvasDim.canvasWidth,canvasDim.canvasHeight);
     completeImageZoom=context.getImageData(canvasDim.canvasXPos,canvasDim.canvasYPos,canvasDim.canvasWidth,canvasDim.canvasHeight);
-  };   
-  imageObj.src = "images/creative4.jpg";
+  });
   
   //** TOOL BINDINGS **
   var tool="Pan";
@@ -155,7 +155,7 @@ function centerCanvas(windowWidth, windowHeight, width, height){
       canvasWidth=width/multiplier;
       canvasHeight=windowHeight;
   }
-  if(height<width){
+  else{
       multiplier=(width)/(windowWidth*.55);
       canvasXPos=windowWidth*2.22;
       canvasYPos=(windowHeight)*.5-height/(2*multiplier)+windowHeight*2;
@@ -193,4 +193,10 @@ function zoomCanvas(context, originalData, imgData, canvasDim, e){
     }
   }
   return scaled;
+}
+
+function loading(operand){
+  if (operand){
+  }else{
+  }
 }
