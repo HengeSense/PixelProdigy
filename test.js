@@ -4,7 +4,6 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var pg = require('pg').native;
@@ -37,5 +36,8 @@ postgresClient.connect(function(err) {
     return console.error('could not connect to postgres', err);
 });
 
-var query = postgresClient.query("CREATE TABLE libraries (library_id BIGSERIAL PRIMARY KEY,user_id BIGSERIAL)");
+var query = postgresClient.query("SELECT * FROM libraries");
+query.on('row', function(row) {
+  console.log(row);
+});
       

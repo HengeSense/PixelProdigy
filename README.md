@@ -16,7 +16,8 @@ Icons by famfamfam.com
 
 Documentation
 -------------
-Server-Side Datastructures (relational diagram)
-![ScreenShot](/readme_assets/server_structures.jpg)
+Database Organization (relational diagram)
+![ScreenShot](/readme_assets/database_organization.jpg)
+
 Client-Side Datastructures (relational diagram)
 ![ScreenShot](/readme_assets/client_structures.jpg)

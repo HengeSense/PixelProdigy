@@ -10,16 +10,8 @@ exports.initImage = function(req, res){
     var canvas=new Canvas(canvasDim.canvasWidth,canvasDim.canvasHeight);
     var ctx = canvas.getContext('2d');
     ctx.drawImage(imgObject,0,0,canvasDim.canvasWidth,canvasDim.canvasHeight);
-    var imgData=ctx.getImageData(0,0,canvasDim.canvasWidth,canvasDim.canvasHeight);
-    imgData = JSON.stringify(imgData);
-    fs.writeFile("/home/action/PixelProdigy/tmpPhotoStreams/1.json",imgData, function(err) {
-      if(err) {
-        console.log(err);
-      } else {
-        console.log("The file was saved!");
-      }
-    }); 
-    res.send({baseImage: imgData});
+    var imgData=convertCanvasToImage(canvas);
+    res.send(imgData);
   }
   imgObject.src = '/home/action/PixelProdigy/public/images/creative6.jpg';
 };
@@ -37,4 +29,10 @@ function exportDim(windowWidth, windowHeight, width, height){
       canvasHeight=height/multiplier;
   }
   return {canvasWidth: canvasWidth, canvasHeight: canvasHeight};
+}
+
+function convertCanvasToImage(canvas) {
+	var image = new Canvas.Image;
+	image.src = canvas.toDataURL("image/png");
+	return image;
 }
