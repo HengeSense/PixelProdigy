@@ -31,11 +31,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //postgres
 var postgresClient = new pg.Client({
-  user: 'ooohcpmyoblzen',
-  password: '45lRLX0n9MDBx4pLiW92qDn3Ot',
-  host: 'ec2-54-204-37-113.compute-1.amazonaws.com',
-  port: '5432',
-  database: 'dat2018ie4nsap'
+  user: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+  host: process.env.PG_HOST,
+  port: process.env.PG_PORT,
+  database: process.env.PG_DATABASE
 });
 postgresClient.connect(function(err) {
   if(err)
