@@ -17,8 +17,13 @@ postgresClient.connect(function(err) {
   if(err)
     return console.error('could not connect to postgres', err);
 });
+var query = postgresClient.query("SELECT * FROM layers");
+//fired after last row is emitted
 
-postgresClient.query("DROP TABLE users");
-postgresClient.query("DROP TABLE libraries");
-postgresClient.query("DROP TABLE photos");
-postgresClient.query("DROP TABLE layers");
+query.on('row', function(row) {
+  console.log(row);
+});
+
+query.on('end', function() { 
+  postgresClient.end();
+});
