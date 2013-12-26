@@ -17,7 +17,7 @@ postgresClient.connect(function(err) {
   if(err)
     return console.error('could not connect to postgres', err);
 });
-var query = postgresClient.query("SELECT * FROM layers");
+var query = postgresClient.query("SELECT * FROM photos");
 //fired after last row is emitted
 
 query.on('row', function(row) {

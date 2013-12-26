@@ -18,7 +18,6 @@ postgresClient.connect(function(err) {
     return console.error('could not connect to postgres', err);
 });
 var query = postgresClient.query("SELECT * FROM users");
-//fired after last row is emitted
 
 query.on('row', function(row) {
   console.log(row);
