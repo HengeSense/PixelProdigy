@@ -10,13 +10,24 @@ $(document).ready(function() {
   canvas.height=windowHeight*4;
   $(canvas).css({position: 'absolute', marginTop: (-2*windowHeight)+'px', marginLeft: (-2*windowWidth)+'px'});
   $.ajax({url:"/editorutils/loadphoto",data:{windowWidth:windowWidth,windowHeight:windowHeight}}).done(function(data){
-    //var imageObj=data.baseImage;
+    canvasDim=centerCanvas(windowWidth,windowHeight,data.width,data.height);
+    alert(data.image);
+    var imageObj=new Image();
+    imageObj.onload = function() {
+      context.putImageData(imageObj, canvasDim.canvasXPos, canvasDim.canvasYPos,0,0,canvasDim.canvasWidth,canvasDim.canvasHeight);
+      topLayerImage=context.getImageData(canvasDim.canvasXPos,canvasDim.canvasYPos,canvasDim.canvasWidth,canvasDim.canvasHeight);
+      completeImage=context.getImageData(canvasDim.canvasXPos,canvasDim.canvasYPos,canvasDim.canvasWidth,canvasDim.canvasHeight);
+      completeImageZoom=context.getImageData(canvasDim.canvasXPos,canvasDim.canvasYPos,canvasDim.canvasWidth,canvasDim.canvasHeight);
+    };
+    imageObj.src = data.image;
+    
     var layer_ids=data.layers.replace('{','').replace('}','').split(",")
-    //canvasDim=centerCanvas(windowWidth,windowHeight,imageObj.width,imageObj.height);
-    //context.putImageData(imageObj, canvasDim.canvasXPos, canvasDim.canvasYPos,0,0,canvasDim.canvasWidth,canvasDim.canvasHeight);
-    //topLayerImage=context.getImageData(canvasDim.canvasXPos,canvasDim.canvasYPos,canvasDim.canvasWidth,canvasDim.canvasHeight);
-    //completeImage=context.getImageData(canvasDim.canvasXPos,canvasDim.canvasYPos,canvasDim.canvasWidth,canvasDim.canvasHeight);
-    //completeImageZoom=context.getImageData(canvasDim.canvasXPos,canvasDim.canvasYPos,canvasDim.canvasWidth,canvasDim.canvasHeight);
+    for (var i = 1; i < layer_ids.length; i++){
+      $.ajax({url:"/editorutils/loadlayer",data:{layer_id:layer_ids[i]}}).done(function(data){
+      
+      });
+    }
+    $(".displayOverlay").css({display: 'none'});
   });
   
   //** TOOL BINDINGS **

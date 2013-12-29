@@ -25,15 +25,23 @@ exports.loadPhoto = function(req, res){
   var photoQuery = postgresClient.query("SELECT * FROM photos WHERE photo_id=$1",[photoid]);
   photoQuery.on('row', function(row) {
     var canvasDim=exportDim(req.query.windowWidth,req.query.windowHeight,row.photo_width,row.photo_height);
-    res.send({width:canvasDim.width,height:canvasDim.height,layers:row.layer_id});
+    var canvas=new Canvas(canvasDim.width,canvasDim.height);
+    var ctx=canvas.getContext('2d');
+    var img = new Canvas.Image;
+    img.onload = function(){
+      ctx.drawImage(row.completeImage,0,0,canvasDim.width,canvasDim.height);
+      var b64png = canvas.toDataURL();
+      res.send({width:canvasDim.width,height:canvasDim.height,image:b64png,layers:row.layer_id});
+    };
+    img.src = row.completeImage; 
   });
 };
 exports.loadLayer = function(req, res){
   res.contentType('application/json');
+  var canvas=new Canvas(req.query.photoWidth,req.query.photoHeight);
+  var ctx=canvas.getContext('2d');
   var layerQuery = postgresClient.query("SELECT * FROM layers WHERE layer_id=$1",[req.query.layerID]);
   layerQuery.on('row', function(row) {
-    var canvas=new Canvas(req.query.photoWidth,req.query.photoHeight);
-    var ctx=canvas.getContext('2d');
   });
 };
 
