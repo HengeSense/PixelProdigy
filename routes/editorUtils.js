@@ -1,20 +1,28 @@
+var photoid=1;
+
 var Canvas = require('canvas');
 var fs = require('fs');
 var maxJSON=1232;
 
 exports.initImage = function(req, res){
+  res.send("null");
+};
+
+exports.loadPhoto = function(req, res){
   res.contentType('application/json');
-  //TODO: GET imgObject from upload
-  var imgObject=new Canvas.Image;
-  imgObject.onload = function(){
-    var canvasDim=exportDim(req.query.windowWidth,req.query.windowHeight,imgObject.width,imgObject.height);
-    var canvas=new Canvas(canvasDim.canvasWidth,canvasDim.canvasHeight);
-    var ctx = canvas.getContext('2d');
-    ctx.drawImage(imgObject,0,0,canvasDim.canvasWidth,canvasDim.canvasHeight);
-    var b64png = canvas.toDataURL();
-    res.send(b64png);
-  }
-  imgObject.src = '/home/action/PixelProdigy/public/images/creative6.jpg';
+  var photoQuery = postgresClient.query("SELECT * FROM photos WHERE photo_id=$1",[photoid]);
+  photoQuery.on('row', function(row) {
+    var canvasDim=exportDim(req.query.windowWidth,req.query.windowHeight,row.photo_width,row.photo_height);
+    res.send({width:canvasDim.width,height:canvasDim.height,layers:row.layer_id});
+  });
+};
+exports.loadLayer = function(req, res){
+  res.contentType('application/json');
+  var layerQuery = postgresClient.query("SELECT * FROM layers WHERE layer_id=$1",[req.query.layerID]);
+  layerQuery.on('row', function(row) {
+    var canvas=new Canvas(req.query.photoWidth,req.query.photoHeight);
+    var ctx=canvas.getContext('2d');
+  };
 };
 
 function exportDim(windowWidth, windowHeight, width, height){
