@@ -17,7 +17,8 @@ postgresClient.connect(function(err) {
   if(err)
     return console.error('could not connect to postgres', err);
 });
-var query = postgresClient.query("SELECT * FROM photos");
+var library_id=[1];
+var query = postgresClient.query("UPDATE users SET library_id=$1 WHERE user_id=1",[library_id]);
 //fired after last row is emitted
 
 query.on('row', function(row) {

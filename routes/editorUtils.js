@@ -1,13 +1,25 @@
 var photoid=1;
 
+var pg = require('pg').native;
 var Canvas = require('canvas');
 var fs = require('fs');
 var maxJSON=1232;
 
+//postgres
+var postgresClient = new pg.Client({
+  user: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+  host: process.env.PG_HOST,
+  port: process.env.PG_PORT,
+  database: process.env.PG_DATABASE
+});
+postgresClient.connect(function(err) {
+  if(err)
+    return console.error('could not connect to postgres', err);
+});
 exports.initImage = function(req, res){
   res.send("null");
 };
-
 exports.loadPhoto = function(req, res){
   res.contentType('application/json');
   var photoQuery = postgresClient.query("SELECT * FROM photos WHERE photo_id=$1",[photoid]);
@@ -22,7 +34,7 @@ exports.loadLayer = function(req, res){
   layerQuery.on('row', function(row) {
     var canvas=new Canvas(req.query.photoWidth,req.query.photoHeight);
     var ctx=canvas.getContext('2d');
-  };
+  });
 };
 
 function exportDim(windowWidth, windowHeight, width, height){

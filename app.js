@@ -81,6 +81,8 @@ app.get('/account', function(req, res) {
   res.render('account', {user: req.user});
 });
 app.get('/editorutils/initimage', editorUtils.initImage);
+app.get('/editorutils/loadphoto', editorUtils.loadPhoto);
+app.get('/editorutils/loadlayer', editorUtils.loadLayer);
 app.get('/completeEditor', function(req, res) {
   res.render('editor');
 });
